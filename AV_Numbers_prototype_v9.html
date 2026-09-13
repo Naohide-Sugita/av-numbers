@@ -254,7 +254,7 @@ function exprHtml(q){
  let h=numHtml(q.terms[0].n,q.terms[0].s);for(let i=1;i<q.terms.length;i++)h+=' '+q.ops[i-1]+' '+numHtml(q.terms[i].n,q.terms[i].s);return h+' = ?'
 }
 function baseExpr(q){let h=String(q.terms[0].n);for(let i=1;i<q.terms.length;i++)h+=' '+q.ops[i-1]+' '+q.terms[i].n;return h}
-function renderHome(){currentStage=Math.min(unlocked,STAGE_COUNT);const st=stages[currentStage-1];$('#homeStage').textContent='Stage '+currentStage;$('#homeDesc').textContent=st.desc;$('#homeBest').textContent='Best '+(best[currentStage]!==undefined?best[currentStage]+'/10':'—')}
+function renderHome(){const displayStage=Math.min(unlocked,STAGE_COUNT);const st=stages[displayStage-1];$('#homeStage').textContent='Stage '+displayStage;$('#homeDesc').textContent=st.desc;$('#homeBest').textContent='Best '+(best[displayStage]!==undefined?best[displayStage]+'/10':'—')}
 function renderStages(){const box=$('#stageList');box.innerHTML='';stages.forEach(st=>{const locked=st.id>unlocked,b=document.createElement('button');b.className='stageItem'+(locked?' locked':'');b.disabled=locked;b.innerHTML=`<span class="stageMeta"><strong>Stage ${st.id}</strong><small>${st.desc}</small></span><span class="stageScore">${locked?'🔒':(best[st.id]!==undefined?best[st.id]+'/10':'—')}</span>`;if(!locked)b.onclick=()=>startStage(st.id);box.appendChild(b)})}
 function startStage(id){currentStage=id;questionIndex=0;correct=0;buildSet(stages[id-1]);showScreen('gameScreen');renderQuestion()}
 function updateAnswerUI(){
