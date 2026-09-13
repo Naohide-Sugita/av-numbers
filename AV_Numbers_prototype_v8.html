@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<title>AV Numbers Prototype</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#17233c;--muted:#758198;--v:#2f86ff;--a:#ff5d72;--line:#e3e8f0;--ok:#159764;--bad:#d94e62;--shadow:0 20px 55px rgba(39,62,94,.12)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;background:linear-gradient(180deg,#eef5ff,#f8fafc 48%,#eef2f7);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;min-height:100dvh}button{font:inherit}.app{max-width:460px;margin:auto;min-height:100dvh;padding:20px 16px 28px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.brand{font-size:28px;font-weight:900;letter-spacing:-1px}.v{color:var(--v)}.A{color:var(--a)}.iconbtn{width:40px;height:40px;border:1px solid #e7ecf3;border-radius:50%;background:#fff;box-shadow:0 8px 20px rgba(30,55,90,.08);font-weight:900;color:var(--ink)}.panel{background:#ffffffeb;border-radius:28px;box-shadow:var(--shadow);padding:16px}.hidden{display:none!important}
+.hero{padding:20px 4px 6px;text-align:center}.hero h1{font-size:34px;margin:4px 0 8px;letter-spacing:-1.3px}.hero p{margin:0;color:var(--muted);font-size:14px}.current{margin:18px 0 14px;padding:18px;border:1px solid var(--line);border-radius:22px;background:#fbfcfe}.row{display:flex;justify-content:space-between;gap:10px;align-items:center}.current b{font-size:20px}.current small{color:var(--muted)}.play{width:100%;border:0;border-radius:18px;background:var(--ink);color:#fff;padding:16px;font-weight:900;font-size:16px}.subnav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.subnav button{border:0;border-radius:15px;background:#edf2f8;color:#53627a;padding:12px 6px;font-weight:800;font-size:13px}
+.screenTitle{display:flex;align-items:center;gap:10px;margin-bottom:12px}.back{border:0;background:#edf2f8;border-radius:12px;width:36px;height:36px;font-weight:900;color:var(--ink)}.screenTitle h2{margin:0;font-size:22px}.stageList{display:grid;gap:9px}.stageItem{border:1px solid var(--line);border-radius:18px;background:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center;text-align:left}.stageItem.locked{opacity:.45}.stageMeta{display:flex;flex-direction:column;gap:3px}.stageMeta strong{font-size:15px}.stageMeta small{color:var(--muted);font-size:12px}.stageScore{font-weight:900}
+.gameTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.gameTop .left{display:flex;gap:8px;align-items:center}.stageLabel{font-weight:900}.progressText{font-size:13px;color:var(--muted)}.progress{height:7px;background:#e9eef5;border-radius:99px;overflow:hidden;margin-bottom:16px}.progress i{display:block;height:100%;background:linear-gradient(90deg,#4d9bff,#8dc2ff);width:10%}.qcard{border:1px solid var(--line);border-radius:24px;min-height:185px;background:linear-gradient(#fff,#fbfcfe);display:flex;align-items:center;justify-content:center;padding:22px;text-align:center}.expr{font-size:39px;font-weight:900;letter-spacing:-1px;line-height:1.28}.expr.long{font-size:31px}.answerWrap{margin-top:14px;border:1px solid var(--line);border-radius:22px;padding:14px;background:#fff}.answerLabel{font-size:12px;color:var(--muted);margin-bottom:9px;text-align:center}.answerBox{display:flex;justify-content:center;gap:10px;align-items:center;min-height:74px}.part{min-width:82px;height:62px;border:2px solid #e5eaf1;border-radius:17px;background:#fbfcfe;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900;position:relative}.part.symbol{min-width:70px}.part.selected{border-color:#7bb5ff;background:#eef6ff;box-shadow:0 0 0 3px rgba(47,134,255,.08)}.part .placeholder{color:#c3cbd7}.partTag{position:absolute;top:5px;left:8px;font-size:9px;color:#9aa5b5;font-weight:700}.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}.key{border:0;border-radius:16px;background:#edf2f8;color:var(--ink);padding:14px 6px;font-weight:900;font-size:20px}.symbolKey{font-size:24px}.delete{background:#fff0f2;color:var(--bad)}.ok{background:var(--ink);color:#fff}.key:disabled{opacity:.35}.hint{margin-top:10px;text-align:center;color:var(--muted);font-size:11px}.feedback{border-radius:20px;padding:15px;display:none}.feedback.show{display:block}.feedback.ok{position:fixed;z-index:60;left:50%;top:max(88px,calc(env(safe-area-inset-top) + 70px));transform:translateX(-50%);width:min(calc(100% - 32px),428px);background:#ecfff6;color:#0f7f54;border:1px solid #bfead7;box-shadow:0 16px 44px rgba(17,96,68,.18)}.feedback.bad{position:fixed;z-index:55;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,460px);max-height:82dvh;overflow:auto;background:#fff2f4;color:#8d3041;border-radius:28px 28px 0 0;box-shadow:0 -20px 55px rgba(39,62,94,.18);padding:18px}.feedback h3{margin:0 0 8px;font-size:17px}.explain{background:#fff;border-radius:15px;padding:12px;color:#43516a;font-size:13px;line-height:1.55}.nextBtn{width:100%;border:0;border-radius:15px;background:var(--ink);color:#fff;padding:13px;margin-top:10px;font-weight:900}.rail{display:flex;align-items:center;justify-content:center;gap:4px;margin:12px 0 4px;overflow:hidden}.railNode{min-width:46px;padding:8px 4px;border-radius:12px;background:#eef2f7;text-align:center;font-weight:900;font-size:13px}.railNode.active{background:#17233c;color:#fff}.railArrow{color:#a2acbb;font-weight:900}.step{border:1px solid var(--line);border-radius:12px;padding:9px 10px;background:#fff;margin-top:7px}.result{text-align:center;padding:26px 8px}.result .emoji{font-size:46px}.result h2{margin:8px 0 4px}.scoreBig{font-size:48px;font-weight:900;margin:8px 0}.result p{color:var(--muted);font-size:14px}.resultBtns{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}.resultBtns button{border:0;border-radius:16px;padding:14px;font-weight:900}.secondary{background:#edf2f8;color:#53627a}.primary{background:var(--ink);color:#fff}
+.modalBg{position:fixed;inset:0;background:#0c15255a;display:none;align-items:flex-end;z-index:20}.modalBg.show{display:flex}.sheet{width:min(100%,460px);margin:auto;background:#fff;border-radius:28px 28px 0 0;padding:12px 18px 26px}.handle{width:48px;height:5px;background:#d8dee8;border-radius:99px;margin:2px auto 14px}.sheet h2{margin:0 0 12px}.ruleRow{border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:8px;background:#fbfcfe;font-size:14px;line-height:1.5}.close{width:100%;border:0;border-radius:15px;background:var(--ink);color:#fff;padding:13px;margin-top:12px;font-weight:900}.tutorial{position:fixed;inset:0;background:linear-gradient(#eef5ff,#f8fafc);z-index:30;display:none;align-items:center;justify-content:center;padding:20px}.tutorial.show{display:flex}.tutCard{width:min(100%,430px);background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:22px;text-align:center}.tutStep{font-size:12px;color:var(--muted);letter-spacing:.1em}.tutMain{font-size:39px;font-weight:900;margin:18px 0 10px}.tutText{font-size:14px;color:#53627a;line-height:1.6}.tutLine{font-size:22px;font-weight:900;margin:18px 0}.tutNext{width:100%;border:0;border-radius:16px;background:var(--ink);color:#fff;padding:14px;font-weight:900;margin-top:14px}
+
+/* animated number-line rail */
+.animRail{position:relative;margin:16px 0 10px;padding:18px 8px 8px;overflow:hidden}
+.animTrack{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(48px,1fr);align-items:end;position:relative}
+.animTrack:before{content:"";position:absolute;left:5%;right:5%;top:12px;height:2px;background:#cfd7e3;border-radius:99px}
+.animSlot{position:relative;text-align:center;padding-top:24px;font-size:12px;font-weight:900;color:#6c7890;min-width:48px}
+.animSlot:before{content:"";position:absolute;top:8px;left:50%;width:9px;height:9px;border-radius:50%;background:#d5dce7;transform:translateX(-50%);z-index:1}
+.animSlot.current{color:var(--ink)}
+.animCursor{position:absolute;top:3px;left:0;width:20px;height:20px;border-radius:50%;background:var(--ink);box-shadow:0 5px 14px rgba(23,35,60,.28);z-index:3;transition:transform .48s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.animCursor:after{content:"";position:absolute;left:50%;top:19px;width:2px;height:12px;background:var(--ink);transform:translateX(-50%);opacity:.65}
+.animCaption{text-align:center;font-size:12px;color:var(--muted);min-height:18px;margin-top:4px;font-weight:800}
+.animControls{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.animControls button{border:0;border-radius:13px;background:#edf2f8;padding:10px 14px;font-weight:900;color:var(--ink)}
+.animEffect.active{border-color:#7bb5ff;background:#eef6ff}
+.tutInteractive{margin-top:8px}
+.tutMoveBtns{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.tutMoveBtns button{border:0;border-radius:14px;background:#edf2f8;padding:11px 18px;font-size:19px;font-weight:900}.learnGoal{margin:14px 0 4px;padding:12px 14px;border-radius:15px;background:#f4f7fb;border:1px solid #e3e8f0;text-align:left;font-size:13px;line-height:1.5}.learnGoal b{display:block;margin-bottom:3px;color:#17233c}.tutMain.compact{font-size:31px}
+
+/* two-phase answer input */
+.solveStep{border:1px solid var(--line);border-radius:17px;padding:12px;margin-top:10px;background:#fbfcfe}.solveStepLabel{display:flex;justify-content:space-between;gap:8px;align-items:baseline;font-size:12px;color:var(--muted)}.solveStepLabel b{font-size:13px;color:var(--ink)}.solveStepLabel span{font-size:10px}.baseAnswer{height:58px;margin-top:10px;border-radius:15px;background:#fff;border:2px solid #e5eaf1;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900}.baseAnswer .placeholder{color:#c3cbd7}.moveStep{margin-top:9px}.moveControls{display:grid;grid-template-columns:68px 1fr 68px;gap:10px;align-items:center;margin-top:10px}.moveBtn{height:58px;border:0;border-radius:16px;background:#eaf2fd;color:var(--ink);font-size:30px;font-weight:900}.moveBtn:disabled{opacity:.3}.currentPosition{height:58px;border-radius:16px;background:#fff;border:2px solid #e5eaf1;display:flex;align-items:center;justify-content:center;font-size:31px;font-weight:900}.moveStatus{text-align:center;color:var(--muted);font-size:11px;margin-top:8px;min-height:16px}.keypad{grid-template-columns:repeat(3,1fr)}.fullOk{width:100%;margin-top:8px}.zeroKey{grid-column:2}.delete{grid-column:1}
+
+/* v6: one-screen game layout + simplified tutorial */
+.app:has(#gameScreen:not(.hidden)){padding:0;height:100dvh;overflow:hidden}
+#gameScreen{height:100dvh;overflow:hidden}
+#gameScreen>.top{display:none}
+#gameScreen .panel{height:100dvh;border-radius:0;box-shadow:none;padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;flex-direction:column;overflow:hidden}
+#gameScreen .gameTop{margin-bottom:6px;min-height:36px}
+#gameScreen .progress{height:5px;margin-bottom:8px}
+#gameScreen .qcard{min-height:0;height:clamp(104px,16dvh,132px);padding:12px;border-radius:18px;flex:0 0 auto}
+#gameScreen .expr{font-size:clamp(29px,8vw,38px)}
+#gameScreen .expr.long{font-size:clamp(23px,6.4vw,30px)}
+#gameScreen .answerWrap{margin-top:8px;padding:8px;border-radius:18px;flex:0 0 auto}
+#gameScreen .answerLabel{display:none}
+#gameScreen .solveStep{padding:7px 8px;margin-top:0;border-radius:13px}
+#gameScreen .solveStep+.solveStep{margin-top:6px}
+#gameScreen .solveStepLabel b{font-size:11px}
+#gameScreen .solveStepLabel span{font-size:9px}
+#gameScreen .baseAnswer{height:42px;margin-top:5px;font-size:27px;border-radius:12px}
+#gameScreen .moveControls{grid-template-columns:58px 1fr 58px;gap:8px;margin-top:5px}
+#gameScreen .moveBtn,#gameScreen .currentPosition{height:44px;border-radius:12px}
+#gameScreen .moveBtn{font-size:26px}
+#gameScreen .currentPosition{font-size:26px}
+#gameScreen .moveStatus{margin-top:3px;min-height:13px;font-size:10px}
+#gameScreen .keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:8px;flex:0 0 auto}
+#gameScreen .key{height:48px;padding:0;border-radius:14px;font-size:20px}
+#gameScreen .zeroKey{grid-column:2}
+#gameScreen .ok{grid-column:1 / -1;height:46px;margin-top:1px}
+#gameScreen .key{height:44px;padding:0;font-size:18px;border-radius:12px}
+#gameScreen .hint{margin-top:5px;font-size:9px;line-height:1.2}
+@media (max-height:700px){
+ #gameScreen .panel{padding-top:6px}
+ #gameScreen .qcard{height:92px}
+ #gameScreen .expr{font-size:28px}
+ #gameScreen .baseAnswer{height:38px}
+ #gameScreen .moveBtn,#gameScreen .currentPosition{height:40px}
+ #gameScreen .key{height:39px}
+ #gameScreen .hint{display:none}
+}
+.tutCard{max-height:calc(100dvh - 24px);overflow:hidden;display:flex;flex-direction:column;padding:18px}
+.tutMain{margin:10px 0 6px;font-size:33px}
+.tutText{font-size:13px;line-height:1.45}
+.tutLine{margin:8px 0;font-size:18px}
+.tutInteractive{min-height:160px;display:flex;flex-direction:column;justify-content:center}
+.tutNext:disabled{opacity:.35}
+.tutInstruction{font-size:12px;color:var(--muted);margin-top:6px;font-weight:800}
+.tutDone{color:var(--ok)}
+
+</style>
+</head>
+<body>
+<div class="app">
+<section id="homeScreen"><div class="top"><div class="brand"><span class="A">A</span><span class="v">v</span> Numbers</div><button class="iconbtn" id="homeRules">?</button></div><div class="panel"><div class="hero"><h1>大きい・普通・小さい、3つの数字で計算しよう</h1><p>1ステージ10問。8問正解でクリア。</p></div><div class="current"><div class="row"><b id="homeStage">Stage 1</b><span id="homeBest">Best —</span></div><small id="homeDesc"></small></div><button class="play" id="playBtn">PLAY</button><div class="subnav"><button id="stagesBtn">Stages</button><button id="rulesBtn">Rules</button><button id="settingsBtn">Settings</button></div></div></section>
+<section id="stagesScreen" class="hidden"><div class="top"><div class="brand"><span class="A">A</span><span class="v">v</span> Numbers</div></div><div class="panel"><div class="screenTitle"><button class="back" id="backHome1">‹</button><h2>Stages</h2></div><div class="stageList" id="stageList"></div></div></section>
+<section id="gameScreen" class="hidden"><div class="top"><div class="brand"><span class="A">A</span><span class="v">v</span> Numbers</div><button class="iconbtn" id="gameRules">?</button></div><div class="panel"><div class="gameTop"><div class="left"><button class="back" id="quitGame">‹</button><span class="stageLabel" id="stageLabel">Stage 1</span></div><span class="progressText" id="progressText">1 / 10</span></div><div class="progress"><i id="progressBar"></i></div><div class="qcard"><div class="expr" id="expr"></div></div><div class="answerWrap"><div class="answerLabel">ANSWER</div><div class="solveStep"><div class="solveStepLabel"><b>① 数字だけで計算する</b><span>v / A はいったん無視</span></div><div class="baseAnswer" id="baseValue"><span class="placeholder">?</span></div></div><div class="solveStep moveStep"><div class="solveStepLabel"><b>② 記号の状態分だけ動かす</b><span>矢印は数直線の移動だけに使います</span></div><div class="moveControls"><button class="moveBtn" id="moveLeft" aria-label="左へ1段">←</button><div class="currentPosition" id="currentPosition">—</div><button class="moveBtn" id="moveRight" aria-label="右へ1段">→</button></div><div class="moveStatus" id="moveStatus">まず普通の答えを入力</div></div></div><div class="feedback" id="feedback"></div><div class="keypad"><button class="key" data-num="1">1</button><button class="key" data-num="2">2</button><button class="key" data-num="3">3</button><button class="key" data-num="4">4</button><button class="key" data-num="5">5</button><button class="key" data-num="6">6</button><button class="key" data-num="7">7</button><button class="key" data-num="8">8</button><button class="key" data-num="9">9</button><button class="key delete" id="deleteKey" aria-label="1文字削除">⌫</button><button class="key zeroKey" data-num="0">0</button></div><button class="key ok fullOk" id="okKey">OK</button><div class="hint">数字を入力 → 必要な段数だけ左右に動かす → OK</div></div></section>
+<section id="resultScreen" class="hidden"><div class="top"><div class="brand"><span class="A">A</span><span class="v">v</span> Numbers</div></div><div class="panel result"><div class="emoji" id="resultEmoji">🎉</div><h2 id="resultTitle">Stage Clear</h2><div class="scoreBig" id="resultScore">8 / 10</div><p id="resultSub"></p><div class="resultBtns"><button class="secondary" id="retryBtn">RETRY</button><button class="primary" id="nextStageBtn">NEXT STAGE</button></div></div></section>
+</div>
+<div class="modalBg" id="rulesModal"><div class="sheet"><div class="handle"></div><h2>Rules</h2><div class="ruleRow"><b class="A">A</b> = 数直線で <b>右へ1つ</b><br><b class="v">v</b> = 数直線で <b>左へ1つ</b></div><div class="ruleRow"><b>数の並び</b><br><code>1 → 1A → 2v → 2 → 2A → 3v → 3</code></div><div class="ruleRow"><b>引き算では右側の作用が反転</b><br><code>5 - 3v = 2A</code><br><code>5 - 3A = 2v</code></div><div class="ruleRow"><details><summary><b>詳しい仕組み</b></summary><div style="margin-top:10px"><code>nv = n - 1/3</code><br><code>nA = n + 1/3</code><br><br><code>7A - 3v</code><br><code>(7 + 1/3) - (3 - 1/3) = 4 + 2/3 = 5v</code></div></details></div><button class="close" id="closeRules">閉じる</button></div></div>
+<div class="modalBg" id="settingsModal"><div class="sheet"><div class="handle"></div><h2>Settings</h2><div class="ruleRow">Sound <span style="float:right">ON</span></div><div class="ruleRow">Vibration <span style="float:right">ON</span></div><div class="ruleRow">Language <span style="float:right">日本語</span></div><button class="close" id="replayTutorial">Tutorialを見る</button><button class="close" id="closeSettings" style="background:#edf2f8;color:#53627a">閉じる</button></div></div>
+<div class="tutorial" id="tutorial"><div class="tutCard"><div class="tutStep" id="tutStep"></div><div class="tutMain" id="tutMain"></div><div class="tutText" id="tutText"></div><div class="tutLine" id="tutLine"></div><div class="tutInteractive" id="tutInteractive"></div><button class="tutNext" id="tutNext">次へ</button></div></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const stages=[
+{id:1,desc:'片側に記号 / 足し算',terms:2,mode:'add',marks:'one'},
+{id:2,desc:'両側に記号 / 足し算',terms:2,mode:'add',marks:'both'},
+{id:3,desc:'片側に記号 / 引き算',terms:2,mode:'sub',marks:'one'},
+{id:4,desc:'両側に記号 / 引き算',terms:2,mode:'sub',marks:'both'},
+{id:5,desc:'3項 / 足し算',terms:3,mode:'add',marks:'multi'},
+{id:6,desc:'3項 / + − 混在',terms:3,mode:'mixed',marks:'multi'},
+{id:7,desc:'4項 / + − 混在',terms:4,mode:'mixed',marks:'multi'},
+{id:8,desc:'4〜5項 / 連続処理',terms:'4-5',mode:'mixed',marks:'dense'}
+];
+let unlocked=Math.min(Number(localStorage.getItem('avn_unlocked')||1),8),best=JSON.parse(localStorage.getItem('avn_best')||'{}'),currentStage=Math.min(unlocked,8),questionIndex=0,correct=0,questions=[],currentQ=null,inputDigits='',inputBase=null,currentThirds=null,shiftCount=0,answering=false;
+const screens=['homeScreen','stagesScreen','gameScreen','resultScreen'];
+const showScreen=id=>screens.forEach(s=>$('#'+s).classList.toggle('hidden',s!==id));
+const stateHtml=s=>s===1?'<span class="A">A</span>':s===-1?'<span class="v">v</span>':'';
+const numHtml=(n,s)=>String(n)+stateHtml(s);
+function fromThirds(t){let n=Math.trunc(t/3),r=t-n*3;if(r===0)return{n,s:0};if(r===1)return{n,s:1};if(r===-1)return{n,s:-1};if(r===2)return{n:n+1,s:-1};if(r===-2)return{n:n-1,s:1}}
+const keyAns=a=>a.n+':'+a.s,randInt=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[Math.floor(Math.random()*a.length)],signState=()=>pick([-1,1]);
+function evalQuestion(terms,ops,withState=true){let t=(terms[0].n*3+(withState?terms[0].s:0));for(let i=1;i<terms.length;i++){const v=terms[i].n*3+(withState?terms[i].s:0);t+=ops[i-1]==='+'?v:-v}return withState?fromThirds(t):t/3}
+function validBasePath(terms,ops){let x=terms[0].n;if(x<0||x>9)return false;for(let i=1;i<terms.length;i++){x+=ops[i-1]==='+'?terms[i].n:-terms[i].n;if(x<0||x>9)return false}return true}
+function qId(terms,ops){return terms.map((t,i)=>`${i?ops[i-1]:''}${t.n}:${t.s}`).join('|')}
+function makeQuestion(stage,forcedStates=null){for(let tries=0;tries<5000;tries++){
+  const count=stage.terms==='4-5'?pick([4,5]):stage.terms;
+  const maxN=stage.id===5?4:stage.id>=6?6:9;
+  const terms=Array.from({length:count},()=>({n:randInt(1,maxN),s:0}));
+  let ops=[];
+  if(stage.mode==='add')ops=Array(count-1).fill('+');
+  else if(stage.mode==='sub')ops=Array(count-1).fill('-');
+  else {ops=Array.from({length:count-1},()=>pick(['+','-']));if(!ops.includes('-'))ops[randInt(0,ops.length-1)]='-';if(!ops.includes('+')&&ops.length>1)ops[randInt(0,ops.length-1)]='+'}
+  if(forcedStates){forcedStates.forEach((v,i)=>{if(i<terms.length)terms[i].s=v})}
+  else if(stage.marks==='one'){terms[randInt(0,1)].s=signState()}
+  else if(stage.marks==='both'){terms[0].s=signState();terms[1].s=signState()}
+  else {
+    const need=stage.marks==='dense'?Math.max(3,count-1):Math.max(2,count-1);
+    let idx=[...Array(count).keys()].sort(()=>Math.random()-.5).slice(0,need);
+    idx.forEach(i=>terms[i].s=signState());
+  }
+  if(!validBasePath(terms,ops))continue;
+  const ans=evalQuestion(terms,ops,true),base=evalQuestion(terms,ops,false);
+  if(!ans||ans.n<0||ans.n>9||base<0||base>9)continue;
+  const id=qId(terms,ops);if(questions.some(q=>q.id===id))continue;
+  return{id,terms,ops,ans,base};
+}throw new Error('gen fail')}
+function buildSet(stage){questions=[];
+  if(stage.id===2){
+    [[-1,-1],[1,1],[-1,1]].forEach(states=>questions.push(makeQuestion(stage,states)));
+    for(let i=0;i<3;i++){const x=signState();questions.push(makeQuestion(stage,[x,-x]))}
+    for(let i=0;i<3;i++){const x=signState();questions.push(makeQuestion(stage,[x,x]))}
+    const x=signState();questions.push(makeQuestion(stage,[x,x]));return;
+  }
+  for(let i=0;i<10;i++)questions.push(makeQuestion(stage));
+}
+function exprHtml(q){let h=numHtml(q.terms[0].n,q.terms[0].s);for(let i=1;i<q.terms.length;i++)h+=' '+q.ops[i-1]+' '+numHtml(q.terms[i].n,q.terms[i].s);return h+' = ?'}
+function baseExpr(q){let h=String(q.terms[0].n);for(let i=1;i<q.terms.length;i++)h+=' '+q.ops[i-1]+' '+q.terms[i].n;return h}
+function renderHome(){currentStage=Math.min(unlocked,8);const st=stages[currentStage-1];$('#homeStage').textContent='Stage '+currentStage;$('#homeDesc').textContent=st.desc;$('#homeBest').textContent='Best '+(best[currentStage]!==undefined?best[currentStage]+'/10':'—')}
+function renderStages(){const box=$('#stageList');box.innerHTML='';stages.forEach(st=>{const locked=st.id>unlocked,b=document.createElement('button');b.className='stageItem'+(locked?' locked':'');b.disabled=locked;b.innerHTML=`<span class="stageMeta"><strong>Stage ${st.id}</strong><small>${st.desc}</small></span><span class="stageScore">${locked?'🔒':(best[st.id]!==undefined?best[st.id]+'/10':'—')}</span>`;if(!locked)b.onclick=()=>startStage(st.id);box.appendChild(b)})}
+function startStage(id){currentStage=id;questionIndex=0;correct=0;buildSet(stages[id-1]);showScreen('gameScreen');renderQuestion()}
+function updateAnswerUI(){
+ const base=$('#baseValue'),pos=$('#currentPosition'),status=$('#moveStatus');
+ if(inputBase===null){base.innerHTML='<span class="placeholder">?</span>';pos.textContent='—';status.textContent='まず普通の答えを入力';$('#moveLeft').disabled=true;$('#moveRight').disabled=true;return}
+ base.textContent=String(inputBase);const x=fromThirds(currentThirds);pos.innerHTML=numHtml(x.n,x.s);$('#moveLeft').disabled=false;$('#moveRight').disabled=false;
+ if(shiftCount===0)status.textContent='基準位置（まだ移動していません）';else status.textContent=shiftCount<0?`左へ ${-shiftCount}段`:`右へ ${shiftCount}段`;
+}
+function resetInput(){inputDigits='';inputBase=null;currentThirds=null;shiftCount=0;answering=false;$('#feedback').className='feedback';$('#feedback').innerHTML='';$$('.key').forEach(k=>k.disabled=false);updateAnswerUI()}
+function renderQuestion(){resetInput();window.scrollTo({top:0,behavior:'auto'});currentQ=questions[questionIndex];$('#stageLabel').textContent='Stage '+currentStage;$('#progressText').textContent=(questionIndex+1)+' / 10';$('#progressBar').style.width=((questionIndex+1)*10)+'%';$('#expr').classList.toggle('long',currentQ.terms.length>=4);$('#expr').innerHTML=exprHtml(currentQ)}
+$$('[data-num]').forEach(k=>k.onclick=()=>{if(answering)return;const d=k.dataset.num;if(inputDigits==='0')inputDigits=d;else inputDigits+=d;inputBase=Number(inputDigits);if(!Number.isSafeInteger(inputBase)){inputDigits=inputDigits.slice(0,-1);inputBase=inputDigits===''?null:Number(inputDigits);return}currentThirds=inputBase*3;shiftCount=0;updateAnswerUI()});
+$('#deleteKey').onclick=()=>{if(answering||inputDigits==='')return;inputDigits=inputDigits.slice(0,-1);if(inputDigits===''){inputBase=null;currentThirds=null;shiftCount=0}else{inputBase=Number(inputDigits);currentThirds=inputBase*3;shiftCount=0}updateAnswerUI()};
+$('#moveLeft').onclick=()=>{if(inputBase===null||answering)return;currentThirds--;shiftCount--;updateAnswerUI()};
+$('#moveRight').onclick=()=>{if(inputBase===null||answering)return;currentThirds++;shiftCount++;updateAnswerUI()};
+const userAnswer=()=>inputBase===null?null:fromThirds(currentThirds);
+function effectData(q){const effects=[];q.terms.forEach((term,i)=>{if(!term.s)return;const sign=i===0?1:(q.ops[i-1]==='+'?1:-1),d=term.s*sign;let reason;if(sign===1)reason=term.s>0?'A なので右へ1つ':'v なので左へ1つ';else reason=term.s<0?'小さい数を引くので右へ1つ':'大きい数を引くので左へ1つ';effects.push({label:`${i+1}番目の数字 ${numHtml(term.n,term.s)}`,d,reason})});return effects}
+function railData(baseThirds,effects){let t=baseThirds,path=[t];effects.forEach(e=>{t+=e.d;path.push(t)});const lo=Math.min(...path)-1,hi=Math.max(...path)+1,slots=[];for(let x=lo;x<=hi;x++)slots.push(x);return{path,slots}}
+function animatedRailMarkup(baseThirds,effects,id){const d=railData(baseThirds,effects);return `<div class="animRail" id="${id}" data-path="${d.path.join(',')}"><div class="animTrack">${d.slots.map(t=>{const x=fromThirds(t);return `<div class="animSlot" data-t="${t}">${numHtml(x.n,x.s)}</div>`}).join('')}<div class="animCursor"></div></div><div class="animCaption"></div></div>`}
+function explain(q){const effects=effectData(q),steps=effects.map((e,i)=>`<div class="step animEffect" data-effect="${i}"><b>${i+1}. ${e.label}</b><br>${e.reason}</div>`).join('');return `<b>まず普通に計算</b><br><code>${baseExpr(q)} = ${q.base}</code>${animatedRailMarkup(q.base*3,effects,'wrongRail')}<div>${steps}</div><br><b>答え：${numHtml(q.ans.n,q.ans.s)}</b><div class="animControls"><button id="replayWrong">もう一度見る</button></div>`}
+function placeCursor(rail,t,instant=false){if(!rail)return;const slot=rail.querySelector(`.animSlot[data-t="${t}"]`),cursor=rail.querySelector('.animCursor'),track=rail.querySelector('.animTrack');if(!slot||!cursor||!track)return;const tr=track.getBoundingClientRect(),sr=slot.getBoundingClientRect();cursor.style.transition=instant?'none':'transform .48s cubic-bezier(.2,.8,.2,1)';const x=(sr.left-tr.left)+(sr.width-cursor.offsetWidth)/2;cursor.style.transform=`translateX(${x}px)`;rail.querySelectorAll('.animSlot').forEach(n=>n.classList.toggle('current',n===slot))}
+function animateRail(railId,effects){const rail=document.getElementById(railId);if(!rail)return;const path=rail.dataset.path.split(',').map(Number),caption=rail.querySelector('.animCaption'),stepEls=$$('.animEffect');stepEls.forEach(x=>x.classList.remove('active'));placeCursor(rail,path[0],true);caption.textContent='基準位置';void rail.offsetWidth;let i=1;function go(){if(i>=path.length){caption.textContent='ここが答え';return}const e=effects[i-1];placeCursor(rail,path[i],false);stepEls.forEach(x=>x.classList.remove('active'));if(stepEls[i-1])stepEls[i-1].classList.add('active');caption.innerHTML=e.reason;i++;setTimeout(go,650)}setTimeout(go,420)}
+$('#okKey').onclick=()=>{if(answering)return;const ua=userAnswer();if(!ua)return;answering=true;$$('.key').forEach(k=>k.disabled=true);$('#moveLeft').disabled=true;$('#moveRight').disabled=true;const baseOk=inputBase===currentQ.base,finalOk=keyAns(ua)===keyAns(currentQ.ans),ok=baseOk&&finalOk,fb=$('#feedback');if(ok){correct++;fb.className='feedback show ok';fb.innerHTML=`<h3>Correct!</h3><div class="explain">普通の計算：<b>${inputBase}</b><br>移動後：<b>${numHtml(ua.n,ua.s)}</b></div>`;setTimeout(nextQuestion,1000)}else{const effects=effectData(currentQ);const processNote=!baseOk?`<div class="step"><b>普通の計算</b><br>入力：${inputBase} / 正しくは ${currentQ.base}</div>`:'';fb.className='feedback show bad';fb.innerHTML=`<h3>正解：${numHtml(currentQ.ans.n,currentQ.ans.s)}</h3><div class="explain">${processNote}${explain(currentQ)}</div><button class="nextBtn" id="manualNext">次へ</button>`;$('#manualNext').onclick=nextQuestion;$('#replayWrong').onclick=()=>animateRail('wrongRail',effects);requestAnimationFrame(()=>animateRail('wrongRail',effects))}};
+function nextQuestion(){if(questionIndex>=9){finishStage();return}questionIndex++;renderQuestion()}
+function finishStage(){const passed=correct>=8;best[currentStage]=Math.max(best[currentStage]||0,correct);localStorage.setItem('avn_best',JSON.stringify(best));if(passed&&currentStage<8&&unlocked<currentStage+1){unlocked=currentStage+1;localStorage.setItem('avn_unlocked',String(unlocked))}$('#resultEmoji').textContent=passed?'🎉':'↻';$('#resultTitle').textContent=passed?(correct===10?'Perfect!':'Stage Clear'):'Try Again';$('#resultScore').textContent=correct+' / 10';$('#resultSub').textContent=passed?(correct===10?'全問正解です。':(currentStage<8?'次のステージが解放されました。':'全ステージクリア！')):'7問以下だったため、このステージに再挑戦します。';$('#nextStageBtn').textContent=passed&&currentStage<8?'NEXT STAGE':'STAGES';showScreen('resultScreen');renderHome();renderStages()}
+$('#retryBtn').onclick=()=>startStage(currentStage);$('#nextStageBtn').onclick=()=>{if(correct>=8&&currentStage<8)startStage(currentStage+1);else{showScreen('stagesScreen');renderStages()}};$('#playBtn').onclick=()=>startStage(Math.min(unlocked,8));$('#stagesBtn').onclick=()=>{renderStages();showScreen('stagesScreen')};$('#backHome1').onclick=()=>{renderHome();showScreen('homeScreen')};$('#quitGame').onclick=()=>{renderHome();showScreen('homeScreen')};
+function openRules(){$('#rulesModal').classList.add('show')}$('#homeRules').onclick=openRules;$('#rulesBtn').onclick=openRules;$('#gameRules').onclick=openRules;$('#closeRules').onclick=()=>$('#rulesModal').classList.remove('show');$('#settingsBtn').onclick=()=>$('#settingsModal').classList.add('show');$('#closeSettings').onclick=()=>$('#settingsModal').classList.remove('show');
+const tutSteps=[
+{title:'① 位置だけ覚える',main:'1　 1<span class="A">A</span>　 2<span class="v">v</span>　 2',text:'数字はこの順番で並びます。下のボタンで実際に1段動かしてみてください。',goal:'右へ1段で大きく、左へ1段で小さくなる。',kind:'move',button:'次へ'},
+{title:'② 普通の答えから動かす',main:'2<span class="v">v</span> + 3 = ?',text:'まず記号を無視すると 2 + 3 = 5。ここから v の分だけ左へ1段動かします。',goal:'先に普通の答えを出し、その位置から必要な段数だけ動かす。',kind:'adddemo',button:'次へ'},
+{title:'③ 引き算は向きに注意',main:'5 - 3<span class="v">v</span> = ?',text:'まず 5 - 3 = 2。3v は 3 より小さいので、それを引くと答えは普通より大きくなります。',goal:'右側の数を引くときは、v / A の作用方向が反転する。',kind:'subdemo',button:'Stage 1を始める'}
+];
+let ti=0,tutT=3,tutTimer=null,tutActionDone=false;
+function showTutorial(){ti=0;tutT=3;$('#tutorial').classList.add('show');renderTut()}
+function tutorialRail(id,slots,path){return `<div class="animRail" id="${id}" data-path="${path.join(',')}"><div class="animTrack">${slots.map(t=>{const x=fromThirds(t);return `<div class="animSlot" data-t="${t}">${numHtml(x.n,x.s)}</div>`}).join('')}<div class="animCursor"></div></div><div class="animCaption"></div></div>`}
+function markTutDone(msg){tutActionDone=true;$('#tutNext').disabled=false;const el=document.querySelector('.tutInstruction');if(el){el.textContent=msg;el.classList.add('tutDone')}}
+function renderTut(){
+ if(tutTimer)clearTimeout(tutTimer);tutActionDone=false;
+ const s=tutSteps[ti];
+ $('#tutStep').textContent=`TUTORIAL ${ti+1} / ${tutSteps.length}`;
+ $('#tutMain').classList.toggle('compact',s.kind!=='move');
+ $('#tutMain').innerHTML=s.main;$('#tutText').textContent=s.text;
+ $('#tutLine').innerHTML=`<div class="learnGoal"><b>この画面で分かればOK</b>${s.goal}</div>`;
+ $('#tutNext').textContent=s.button;$('#tutNext').disabled=true;
+ const area=$('#tutInteractive');area.innerHTML='';
+ if(s.kind==='move'){
+   tutT=3;
+   area.innerHTML=tutorialRail('tutRail',[3,4,5,6],[3])+'<div class="tutMoveBtns"><button id="tutLeft">←</button><button id="tutRight">→</button></div><div class="tutInstruction">右の矢印を1回押してください</div>';
+   requestAnimationFrame(()=>{const r=$('#tutRail');placeCursor(r,tutT,true);r.querySelector('.animCaption').textContent='いま：1'});
+   $('#tutLeft').onclick=()=>{tutT=Math.max(3,tutT-1);const r=$('#tutRail');placeCursor(r,tutT,false);const x=fromThirds(tutT);r.querySelector('.animCaption').innerHTML='いま：'+numHtml(x.n,x.s)};
+   $('#tutRight').onclick=()=>{tutT=Math.min(6,tutT+1);const r=$('#tutRail');placeCursor(r,tutT,false);const x=fromThirds(tutT);r.querySelector('.animCaption').innerHTML='いま：'+numHtml(x.n,x.s);markTutDone('右へ1段動きました')};
+ } else if(s.kind==='adddemo'){
+   area.innerHTML='<div class="solveStep"><div class="solveStepLabel"><b>普通の計算</b><span>2 + 3</span></div><div class="baseAnswer">5</div></div>'+tutorialRail('tutAdd',[14,15,16],[15])+'<div class="tutMoveBtns"><button id="tutAddLeft">←</button><button id="tutAddRight">→</button></div><div class="tutInstruction">v なので、左の矢印を1回押してください</div>';
+   requestAnimationFrame(()=>{const r=$('#tutAdd');placeCursor(r,15,true);r.querySelector('.animCaption').textContent='基準：5'});
+   $('#tutAddLeft').onclick=()=>{const r=$('#tutAdd');placeCursor(r,14,false);r.querySelector('.animCaption').innerHTML='答え：5<span class="v">v</span>';markTutDone('5 → 5v。これでOKです')};
+   $('#tutAddRight').onclick=()=>{};
+ } else if(s.kind==='subdemo'){
+   area.innerHTML='<div class="solveStep"><div class="solveStepLabel"><b>普通の計算</b><span>5 - 3</span></div><div class="baseAnswer">2</div></div>'+tutorialRail('tutSub',[5,6,7],[6])+'<div class="tutMoveBtns"><button id="tutSubLeft">←</button><button id="tutSubRight">→</button></div><div class="tutInstruction">3v を引くので、右の矢印を1回押してください</div>';
+   requestAnimationFrame(()=>{const r=$('#tutSub');placeCursor(r,6,true);r.querySelector('.animCaption').textContent='基準：2'});
+   $('#tutSubLeft').onclick=()=>{};
+   $('#tutSubRight').onclick=()=>{const r=$('#tutSub');placeCursor(r,7,false);r.querySelector('.animCaption').innerHTML='答え：2<span class="A">A</span>';markTutDone('2 → 2A。引き算では向きが反転します')};
+ }
+}
+$('#tutNext').onclick=()=>{if(!tutActionDone)return;if(ti===tutSteps.length-1){$('#tutorial').classList.remove('show');localStorage.setItem('avn_tutorial','1');startStage(1);return}ti++;renderTut()};
+$('#replayTutorial').onclick=()=>{$('#settingsModal').classList.remove('show');showTutorial()};
+renderHome();renderStages();showScreen('homeScreen');if(!localStorage.getItem('avn_tutorial'))showTutorial();
+})();
+</script>
+</body></html>
