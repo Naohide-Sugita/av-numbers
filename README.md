@@ -1,6 +1,6 @@
 # AV Numbers
 
-**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**　|　**📊 [コンセプト・ゲーム紹介スライド](slides/AV_Numbers_concept.pptx)**
+**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**　|　**📊 [コンセプト・ゲーム紹介スライド](#コンセプトゲーム紹介)**
 
 すべての数が「小さい（`v`） / 普通 / 大きい（`A`）」の3状態を持ち、その状態が足し算・引き算の中で相殺・増幅・反転する、数直線パズル型の計算ゲーム。
 
@@ -9,6 +9,18 @@
 ```
 
 `2v + 3A = 5`（相殺）、`2A + 3A = 6v`（正規化）、`5 - 3v = 2A`（引き算での反転）のように、数字に付いた `v / A` の作用を1段（= 1/3）単位で合成しながら計算する。詳しい数理仕様は [docs/DESIGN.md](docs/DESIGN.md) を参照。
+
+## コンセプト・ゲーム紹介
+
+<img src="slides/images/slide1.png" width="100%" alt="AV Numbers タイトルスライド">
+<img src="slides/images/slide2.png" width="100%" alt="着想：5歳の子どもの発想から">
+<img src="slides/images/slide3.png" width="100%" alt="数字が持つ3つの状態">
+<img src="slides/images/slide4.png" width="100%" alt="計算のルール：足し算と引き算">
+<img src="slides/images/slide5.png" width="100%" alt="遊び方：2段階で答える">
+<img src="slides/images/slide6.png" width="100%" alt="ゲーム構成：全3ステージ">
+<img src="slides/images/slide7.png" width="100%" alt="遊んでみよう">
+
+編集可能な元データ（PowerPoint）は [slides/AV_Numbers_concept.pptx](slides/AV_Numbers_concept.pptx)。
 
 ## 特徴
 
