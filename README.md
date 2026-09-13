@@ -1,5 +1,7 @@
 # AV Numbers
 
+**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**
+
 すべての数が「小さい（`v`） / 普通 / 大きい（`A`）」の3状態を持ち、その状態が足し算・引き算の中で相殺・増幅・反転する、数直線パズル型の計算ゲーム。
 
 ```text
@@ -17,7 +19,9 @@
 
 ## デモを試す
 
-現在は単一HTMLファイルのプロトタイプ（ビルド不要、外部依存なし）。
+**公開URL（Cloudflare Pages）**：https://av-numbers.ns-studio.workers.dev — ブラウザで開くだけで遊べる。
+
+ローカルで動かす場合は、単一HTMLファイルのプロトタイプ（ビルド不要、外部依存なし）。
 
 ```bash
 # ブラウザで直接開く
