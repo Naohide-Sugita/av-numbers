@@ -20,6 +20,8 @@
 <img src="slides/images/slide6.png" width="100%" alt="ゲーム構成：全3ステージ">
 <img src="slides/images/slide7.png" width="100%" alt="遊んでみよう">
 
+**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**
+
 編集可能な元データ（PowerPoint）は [slides/AV_Numbers_concept.pptx](slides/AV_Numbers_concept.pptx)。
 
 ## 特徴
