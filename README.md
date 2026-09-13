@@ -1,6 +1,6 @@
 # AV Numbers
 
-**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**
+**▶ Play: [https://av-numbers.ns-studio.workers.dev](https://av-numbers.ns-studio.workers.dev)**　|　**📊 [コンセプト・ゲーム紹介スライド](slides/AV_Numbers_concept.pptx)**
 
 すべての数が「小さい（`v`） / 普通 / 大きい（`A`）」の3状態を持ち、その状態が足し算・引き算の中で相殺・増幅・反転する、数直線パズル型の計算ゲーム。
 
